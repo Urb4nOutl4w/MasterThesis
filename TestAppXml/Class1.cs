@@ -17,19 +17,6 @@ namespace Xml2CSharp
 		public string Name { get; set; }
 		[XmlAttribute(AttributeName = "processRef")]
 		public string ProcessRef { get; set; }
-		[XmlElement(ElementName = "participantMultiplicity", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public ParticipantMultiplicity ParticipantMultiplicity { get; set; }
-	}
-
-	[XmlRoot(ElementName = "participantMultiplicity", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-	public class ParticipantMultiplicity
-	{
-		[XmlAttribute(AttributeName = "id")]
-		public string Id { get; set; }
-		[XmlAttribute(AttributeName = "maximum")]
-		public string Maximum { get; set; }
-		[XmlAttribute(AttributeName = "minimum")]
-		public string Minimum { get; set; }
 	}
 
 	[XmlRoot(ElementName = "messageFlow", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
@@ -63,15 +50,13 @@ namespace Xml2CSharp
 		public List<string> FlowNodeRef { get; set; }
 		[XmlAttribute(AttributeName = "id")]
 		public string Id { get; set; }
-		[XmlAttribute(AttributeName = "name")]
-		public string Name { get; set; }
 	}
 
 	[XmlRoot(ElementName = "laneSet", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 	public class LaneSet
 	{
 		[XmlElement(ElementName = "lane", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public List<Lane> Lane { get; set; }
+		public Lane Lane { get; set; }
 		[XmlAttribute(AttributeName = "id")]
 		public string Id { get; set; }
 	}
@@ -85,17 +70,13 @@ namespace Xml2CSharp
 		public string Id { get; set; }
 		[XmlAttribute(AttributeName = "name")]
 		public string Name { get; set; }
-		[XmlElement(ElementName = "messageEventDefinition", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public MessageEventDefinition MessageEventDefinition { get; set; }
-		[XmlAttribute(AttributeName = "isInterrupting")]
-		public string IsInterrupting { get; set; }
 	}
 
 	[XmlRoot(ElementName = "task", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 	public class Task
 	{
 		[XmlElement(ElementName = "incoming", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public string Incoming { get; set; }
+		public List<string> Incoming { get; set; }
 		[XmlElement(ElementName = "outgoing", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 		public string Outgoing { get; set; }
 		[XmlAttribute(AttributeName = "completionQuantity")]
@@ -110,6 +91,21 @@ namespace Xml2CSharp
 		public string StartQuantity { get; set; }
 	}
 
+	[XmlRoot(ElementName = "exclusiveGateway", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+	public class ExclusiveGateway
+	{
+		[XmlElement(ElementName = "incoming", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public string Incoming { get; set; }
+		[XmlElement(ElementName = "outgoing", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public List<string> Outgoing { get; set; }
+		[XmlAttribute(AttributeName = "gatewayDirection")]
+		public string GatewayDirection { get; set; }
+		[XmlAttribute(AttributeName = "id")]
+		public string Id { get; set; }
+		[XmlAttribute(AttributeName = "name")]
+		public string Name { get; set; }
+	}
+
 	[XmlRoot(ElementName = "messageEventDefinition", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 	public class MessageEventDefinition
 	{
@@ -117,13 +113,26 @@ namespace Xml2CSharp
 		public string Id { get; set; }
 	}
 
+	[XmlRoot(ElementName = "intermediateThrowEvent", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+	public class IntermediateThrowEvent
+	{
+		[XmlElement(ElementName = "incoming", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public string Incoming { get; set; }
+		[XmlElement(ElementName = "outgoing", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public string Outgoing { get; set; }
+		[XmlElement(ElementName = "messageEventDefinition", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public MessageEventDefinition MessageEventDefinition { get; set; }
+		[XmlAttribute(AttributeName = "id")]
+		public string Id { get; set; }
+		[XmlAttribute(AttributeName = "name")]
+		public string Name { get; set; }
+	}
+
 	[XmlRoot(ElementName = "endEvent", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 	public class EndEvent
 	{
 		[XmlElement(ElementName = "incoming", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public string Incoming { get; set; }
-		[XmlElement(ElementName = "messageEventDefinition", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public MessageEventDefinition MessageEventDefinition { get; set; }
+		public List<string> Incoming { get; set; }
 		[XmlAttribute(AttributeName = "id")]
 		public string Id { get; set; }
 		[XmlAttribute(AttributeName = "name")]
@@ -146,16 +155,18 @@ namespace Xml2CSharp
 	[XmlRoot(ElementName = "process", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 	public class Process
 	{
-		[XmlElement(ElementName = "extensionElements", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public string ExtensionElements { get; set; }
 		[XmlElement(ElementName = "laneSet", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 		public LaneSet LaneSet { get; set; }
 		[XmlElement(ElementName = "startEvent", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 		public StartEvent StartEvent { get; set; }
 		[XmlElement(ElementName = "task", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 		public List<Task> Task { get; set; }
+		[XmlElement(ElementName = "exclusiveGateway", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public List<ExclusiveGateway> ExclusiveGateway { get; set; }
+		[XmlElement(ElementName = "intermediateThrowEvent", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public List<IntermediateThrowEvent> IntermediateThrowEvent { get; set; }
 		[XmlElement(ElementName = "endEvent", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public EndEvent EndEvent { get; set; }
+		public List<EndEvent> EndEvent { get; set; }
 		[XmlElement(ElementName = "sequenceFlow", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 		public List<SequenceFlow> SequenceFlow { get; set; }
 		[XmlAttribute(AttributeName = "id")]
@@ -168,42 +179,79 @@ namespace Xml2CSharp
 		public string Name { get; set; }
 		[XmlAttribute(AttributeName = "processType")]
 		public string ProcessType { get; set; }
-		[XmlElement(ElementName = "sendTask", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public SendTask SendTask { get; set; }
-		[XmlElement(ElementName = "textAnnotation", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public TextAnnotation TextAnnotation { get; set; }
+		[XmlElement(ElementName = "intermediateCatchEvent", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public List<IntermediateCatchEvent> IntermediateCatchEvent { get; set; }
+		[XmlElement(ElementName = "eventBasedGateway", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public List<EventBasedGateway> EventBasedGateway { get; set; }
 	}
 
-	[XmlRoot(ElementName = "sendTask", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-	public class SendTask
+	[XmlRoot(ElementName = "intermediateCatchEvent", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+	public class IntermediateCatchEvent
 	{
 		[XmlElement(ElementName = "incoming", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 		public string Incoming { get; set; }
 		[XmlElement(ElementName = "outgoing", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
 		public string Outgoing { get; set; }
-		[XmlAttribute(AttributeName = "completionQuantity")]
-		public string CompletionQuantity { get; set; }
+		[XmlElement(ElementName = "messageEventDefinition", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public MessageEventDefinition MessageEventDefinition { get; set; }
 		[XmlAttribute(AttributeName = "id")]
 		public string Id { get; set; }
-		[XmlAttribute(AttributeName = "implementation")]
-		public string Implementation { get; set; }
-		[XmlAttribute(AttributeName = "isForCompensation")]
-		public string IsForCompensation { get; set; }
 		[XmlAttribute(AttributeName = "name")]
 		public string Name { get; set; }
-		[XmlAttribute(AttributeName = "startQuantity")]
-		public string StartQuantity { get; set; }
+		[XmlElement(ElementName = "timerEventDefinition", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public TimerEventDefinition TimerEventDefinition { get; set; }
 	}
 
-	[XmlRoot(ElementName = "textAnnotation", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-	public class TextAnnotation
+	[XmlRoot(ElementName = "timeDuration", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+	public class TimeDuration
 	{
-		[XmlElement(ElementName = "text", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
-		public string Text { get; set; }
 		[XmlAttribute(AttributeName = "id")]
 		public string Id { get; set; }
-		[XmlAttribute(AttributeName = "alignment", Namespace = "http://www.signavio.com")]
-		public string Alignment { get; set; }
+		[XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+		public string Type { get; set; }
+		[XmlText]
+		public string Text { get; set; }
+	}
+
+	[XmlRoot(ElementName = "timerEventDefinition", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+	public class TimerEventDefinition
+	{
+		[XmlElement(ElementName = "timeDuration", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public TimeDuration TimeDuration { get; set; }
+		[XmlAttribute(AttributeName = "id")]
+		public string Id { get; set; }
+		[XmlElement(ElementName = "timeCycle", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public TimeCycle TimeCycle { get; set; }
+	}
+
+	[XmlRoot(ElementName = "eventBasedGateway", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+	public class EventBasedGateway
+	{
+		[XmlElement(ElementName = "incoming", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public string Incoming { get; set; }
+		[XmlElement(ElementName = "outgoing", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+		public List<string> Outgoing { get; set; }
+		[XmlAttribute(AttributeName = "eventGatewayType")]
+		public string EventGatewayType { get; set; }
+		[XmlAttribute(AttributeName = "gatewayDirection")]
+		public string GatewayDirection { get; set; }
+		[XmlAttribute(AttributeName = "id")]
+		public string Id { get; set; }
+		[XmlAttribute(AttributeName = "instantiate")]
+		public string Instantiate { get; set; }
+		[XmlAttribute(AttributeName = "name")]
+		public string Name { get; set; }
+	}
+
+	[XmlRoot(ElementName = "timeCycle", Namespace = "http://www.omg.org/spec/BPMN/20100524/MODEL")]
+	public class TimeCycle
+	{
+		[XmlAttribute(AttributeName = "id")]
+		public string Id { get; set; }
+		[XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+		public string Type { get; set; }
+		[XmlText]
+		public string Text { get; set; }
 	}
 
 	[XmlRoot(ElementName = "Bounds", Namespace = "http://www.omg.org/spec/DD/20100524/DC")]
@@ -241,6 +289,8 @@ namespace Xml2CSharp
 		public string Id { get; set; }
 		[XmlAttribute(AttributeName = "isHorizontal")]
 		public string IsHorizontal { get; set; }
+		[XmlAttribute(AttributeName = "isMarkerVisible")]
+		public string IsMarkerVisible { get; set; }
 	}
 
 	[XmlRoot(ElementName = "waypoint", Namespace = "http://www.omg.org/spec/DD/20100524/DI")]

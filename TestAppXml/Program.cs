@@ -158,13 +158,14 @@ namespace TestAppXml
 
             */
 
-            string rawFile = File.ReadAllText(@"C:\Users\Tim\Dropbox\FH Joanneum\MAB\BPMN\Testprozess Lanes.bpmn");
+            string rawFile = File.ReadAllText(@"C:\Users\Tim\Dropbox\FH Joanneum\MAB\BPMN\Alle Prozesselemente.bpmn");
 
             string cleanFile = RemoveTags(rawFile, "<extensionElements>", "</extensionElements>");
+            cleanFile = cleanFile.Replace("<extensionElements/>", "");
 
             XDocument xdoc = XDocument.Parse(cleanFile);
 
-            xdoc.Save(@"C:\Users\Tim\Dropbox\FH Joanneum\MAB\BPMN\Testprozess Lanes_clean.bpmn");
+            xdoc.Save(@"C:\Users\Tim\Dropbox\FH Joanneum\MAB\BPMN\Alle Prozesselemente_clean.bpmn");
 
 
             XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(Xml2CSharp.Definitions));
