@@ -14,14 +14,16 @@ namespace TestAppXml
 {
     class Program
     {
+        public static string folderPath = @"C:\Users\wds\Dropbox\FH Joanneum\MAB\";
+
         static void Main(string[] args)
         {
             Program program = new Program();
 
-            string[] files = Directory.GetFiles(@"C:\Users\wds\Dropbox\FH Joanneum\MAB\BPMN\Input", "*.bpmn");
+            string[] files = Directory.GetFiles(folderPath + @"BPMN\Input", "*.bpmn");
             foreach (var file in files)
             {
-                string fileName = file.Replace(@"C:\Users\wds\Dropbox\FH Joanneum\MAB\BPMN\Input\", "");
+                string fileName = file.Replace(folderPath + @"BPMN\Input\", "");
                 fileName = fileName.Replace(".bpmn", "");
                 Console.WriteLine(fileName);
                 //string fileName = "Test Service";
@@ -43,7 +45,7 @@ namespace TestAppXml
         public void CleanFile (string fileName)
         {
             // File einlesen
-            string rawFile = File.ReadAllText(@"C:\Users\wds\Dropbox\FH Joanneum\MAB\BPMN\Input\" + fileName + ".bpmn");
+            string rawFile = File.ReadAllText(folderPath + @"BPMN\Input\" + fileName + ".bpmn");
 
             // file reinigen
             string cleanFile = RemoveTags(rawFile, "<extensionElements>", "</extensionElements>");
@@ -53,14 +55,14 @@ namespace TestAppXml
             XDocument xdoc = XDocument.Parse(cleanFile);
 
             // file speichern
-            xdoc.Save(@"C:\Users\wds\Dropbox\FH Joanneum\MAB\BPMN\Clean\" + fileName + ".bpmn");
+            xdoc.Save(folderPath + @"BPMN\Clean\" + fileName + ".bpmn");
         }
 
         public PASS.PASSElements Bpmn2Pass(string fileName)
         {
             // clean file deserializen
             XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(BPMN.Definitions));
-            System.IO.StreamReader file = new System.IO.StreamReader(@"C:\Users\wds\Dropbox\FH Joanneum\MAB\BPMN\Clean\" + fileName + ".bpmn");
+            System.IO.StreamReader file = new System.IO.StreamReader(folderPath + @"BPMN\Clean\" + fileName + ".bpmn");
             BPMN.Definitions bpmn = (BPMN.Definitions)reader.Deserialize(file);
             file.Close();
 
@@ -89,13 +91,13 @@ namespace TestAppXml
             IPASSProcessModel model = new PASSTransformation().PASS2ProcessModel(pass);
 
             // Export Model
-            io.exportModel(model, "C:/Users/wds/Dropbox/FH Joanneum/MAB/PASS/Output/" + fileName + ".owl");
+            io.exportModel(model, folderPath + "/PASS/Output/" + fileName + ".owl");
         }
 
         public void WriteBPMN(BPMN.Definitions bpmn, string fileName)
         {
             var serializer = new XmlSerializer(typeof(BPMN.Definitions));
-            var wfile = new System.IO.StreamWriter(@"C:\Users\wds\Dropbox\FH Joanneum\MAB\BPMN\Reverse\" +fileName + ".bpmn");
+            var wfile = new System.IO.StreamWriter(folderPath + @"BPMN\Reverse\" + fileName + ".bpmn");
             serializer.Serialize(wfile, bpmn);
             wfile.Close();
         }
@@ -105,12 +107,12 @@ namespace TestAppXml
             XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(BPMN.Definitions));
 
             // clean file deserializen
-            System.IO.StreamReader fileClean = new System.IO.StreamReader(@"C:\Users\wds\Dropbox\FH Joanneum\MAB\BPMN\Clean\" + fileName + ".bpmn");
+            System.IO.StreamReader fileClean = new System.IO.StreamReader(folderPath + @"BPMN\Clean\" + fileName + ".bpmn");
             BPMN.Definitions bpmnClean = (BPMN.Definitions)reader.Deserialize(fileClean);
             fileClean.Close();
 
             // Reverse File deserialize
-            System.IO.StreamReader fileReverse = new System.IO.StreamReader(@"C:\Users\wds\Dropbox\FH Joanneum\MAB\BPMN\Reverse\" + fileName + ".bpmn");
+            System.IO.StreamReader fileReverse = new System.IO.StreamReader(folderPath + @"BPMN\Reverse\" + fileName + ".bpmn");
             BPMN.Definitions bpmnReverse = (BPMN.Definitions)reader.Deserialize(fileReverse);
             fileReverse.Close();
 
